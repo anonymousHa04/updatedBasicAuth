@@ -6,6 +6,7 @@ const { confirmEmail, resendLink } = require('../middleware/email');
 // const authRole = require('../middleware/authRole')
 const mailgun = require("mailgun-js");
 const DOMAIN = process.env.DOMAIN;
+// console.log(process.env.APIKEY, DOMAIN)
 const mg = mailgun({ apiKey: process.env.APIKEY, domain: DOMAIN });
 
 
