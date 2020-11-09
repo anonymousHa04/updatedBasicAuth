@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
 
         res.status(201)
             .send(`We have sent a MAGIC link to activate your account. 
-            If U didn't found it check your spam folder or click on resend link.`, )
+            If U didn't found it check your spam folder or click on resend link.`, user)
 
 
     } catch (e) {
