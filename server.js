@@ -8,14 +8,14 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-mongoose.connect(process.env.DATABASE, {useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true}, (err) => {
+mongoose.connect('mongodb+srv://user:bhMC63g7jWHEASTE@authentication.g1fqu.mongodb.net/Authentication?retryWrites=true&w=majority', {useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true}, (err) => {
     if(!err){console.log('MongoDb Connection Succeeded.')}
     else{
         console.log('Unable to connect because of : ' + err);
     }
 })
 
-const port = process.env.PORT;
+const port = 3000;
 
 
 app.use('/', routes);
