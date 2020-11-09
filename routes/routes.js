@@ -4,13 +4,13 @@ const User = require('../db/db');
 const auth = require('../middleware/auth');
 const { confirmEmail, resendLink } = require('../middleware/email');
 // const authRole = require('../middleware/authRole')
-const mailgun = require("mailgun-js");
-const DOMAIN = process.env.DOMAIN;
-// console.log(process.env.APIKEY, DOMAIN)
-const mg = mailgun({ apiKey: process.env.APIKEY, domain: DOMAIN });
+// const mailgun = require("mailgun-js");
+// const DOMAIN = process.env.DOMAIN;
+// // console.log(process.env.APIKEY, DOMAIN)
+// const mg = mailgun({ apiKey: process.env.APIKEY, domain: DOMAIN });
 
 
-router.get('/', async (req, res) => {
+router.get('/', auth,async (req, res) => {
     // res.send('bla ba bla');
     const user = await User.find({});
     res.send(user)
