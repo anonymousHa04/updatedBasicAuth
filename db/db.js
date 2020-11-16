@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     name: String,
     email: {
         type: String,
-        unique: [true, 'Email already taken'],
+        unique: ['Email already taken', true],
         trim: true,
         lowercase: true,
         validate(value) {
