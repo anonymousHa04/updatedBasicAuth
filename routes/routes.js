@@ -5,9 +5,9 @@ const auth = require('../middleware/auth');
 const { confirmEmail, resendLink } = require('../middleware/email');
 // const authRole = require('../middleware/authRole')
 const mailgun = require("mailgun-js");
-const DOMAIN = process.env.DOMAIN;
+const DOMAIN = 'sandbox8a4e1dafb62544088ec74fb52a60af58.mailgun.org';
 // console.log(process.env.APIKEY, DOMAIN)
-const mg = mailgun({ apiKey: process.env.APIKEY, domain: DOMAIN });
+const mg = mailgun({ apiKey: 'e24dd96cefbcbd0bcb1bbe341c66ea0e-9b1bf5d3-3f16faaa', domain: DOMAIN });
 
 
 router.get('/', auth,async (req, res) => {
@@ -44,9 +44,7 @@ router.post('/', async (req, res) => {
             }
         });
 
-        res.status(201)
-            .send(`We have sent a MAGIC link to activate your account. 
-            If U didn't found it check your spam folder or click on resend link.`, user)
+        res.status(201).send({msg: `We have sent a MAGIC link to activate your account.If U didn't found it check your spam folder or click on resend link.`, user: user})
 
 
     } catch (e) {
