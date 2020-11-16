@@ -5,9 +5,9 @@ const auth = require('../middleware/auth');
 const { confirmEmail, resendLink } = require('../middleware/email');
 // const authRole = require('../middleware/authRole')
 const mailgun = require("mailgun-js");
-const DOMAIN = 'sandbox8a4e1dafb62544088ec74fb52a60af58.mailgun.org';
+const DOMAIN = process.env.DOMAIN;
 // console.log(process.env.APIKEY, DOMAIN)
-const mg = mailgun({ apiKey: 'e24dd96cefbcbd0bcb1bbe341c66ea0e-9b1bf5d3-3f16faaa', domain: DOMAIN });
+const mg = mailgun({ apiKey: process.env.APIKEY, domain: DOMAIN });
 
 
 router.get('/', auth,async (req, res) => {
@@ -48,7 +48,10 @@ router.post('/', async (req, res) => {
 
 
     } catch (e) {
-        console.log(e)
+        console.log(e.keyPattern.email) 
+        if (e.keyPattern.email === 1 ){
+            res.status(400).send({msg: `Email Already Taken`})
+        }
         res.status(400).send(e)
     }
 });
@@ -56,7 +59,28 @@ router.post('/', async (req, res) => {
 // send activation link
 router.get('/confirmation/:email/:token', confirmEmail);
 
-router.get('/resend', resendLink);
+router.post('/resend', async (req, res)=> {
+    try {
+        const data = {
+            from: 'Excited User <me@samples.mailgun.org>',
+            to: `${req.body.email}`,
+            subject: 'Activate Your',
+            text: 'Hello ' + req.body.name + ',\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/confirmation\/' + user.email + '\/' + token + '\n\nThank You!\n'
+        };
+        mg.messages().send(data, function (error, body) {
+            if (body !== undefined) {
+                console.log(body);
+            } else {
+                console.log(error)
+            }
+        });
+
+        res.status(201).send({msg: `We have sent a MAGIC link to activate your account.If U didn't found it check your spam folder or click on resend link.`, user: user})
+        
+    } catch (error) {
+        res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
+    }
+});
 
 // login parts
 
