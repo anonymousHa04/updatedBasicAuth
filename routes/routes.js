@@ -71,7 +71,7 @@ router.post('/login', async (req, res) => {
             const token = await user.generateAuthToken()
             res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
             // res.status(201).send({ user })
-            res.status(201).send(`You are logged in with ${user}`)
+            res.status(201).send({msg:`You are logged in.` , user: user})
         }
 
     } catch (e) {
