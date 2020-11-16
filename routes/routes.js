@@ -76,7 +76,7 @@ router.post('/resend', async (req, res)=> {
         });
 
         res.status(201).send({msg: `We have sent a MAGIC link to activate your account.If U didn't found it check your spam folder or click on resend link.`, user: user})
-        
+
     } catch (error) {
         res.status(500).send({msg:'Technical Issue!, Please click on resend for verify your Email.'});
     }
