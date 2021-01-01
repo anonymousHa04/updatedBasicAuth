@@ -66,13 +66,13 @@ userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
 
     if (!user) {
-        throw new Error('Unable to login')
+        throw new Error('Please recheck Ur Email')
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
-        throw new Error('Unable to login')
+        throw new Error('Password Incorrect')
     }
 
     return user
@@ -88,7 +88,7 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
-const exp = 30*60*1000
+const exp = 60*1000
 userSchema.methods.activationAuthToken = async function () {
     const user = this
     const token = jwt.sign({ _id: user._id.toString() }, process.env.ACTIVATIONKEY, {expiresIn: exp})

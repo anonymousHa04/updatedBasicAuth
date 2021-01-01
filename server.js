@@ -2,6 +2,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes/routes')
+const blogRoutes = require('./routes/blogRoutes')
 
 const app = express();
 
@@ -19,6 +20,7 @@ const port = process.env.PORT;
 
 
 app.use('/', routes);
+app.use(blogRoutes)
 
 app.listen(port, (req, res) => {
     console.log(`server started at port ${port}`)
